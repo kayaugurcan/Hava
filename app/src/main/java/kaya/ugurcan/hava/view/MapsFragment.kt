@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.PackageManagerCompat
@@ -29,6 +30,8 @@ import kaya.ugurcan.hava.R
 class MapsFragment : Fragment() {
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private var isLocationPermissionGranted = false
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -54,14 +57,31 @@ class MapsFragment : Fragment() {
 
         if (ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED ){
             //izin verilmemiş
-            
+
         }else{
             //zaten izin verilmiş
 
         }
 
     }
+    fun requestpermission(){
+        isLocationPermissionGranted = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
+        val permissionRequest : MutableList<String> = ArrayList()
+
+        if(!isLocationPermissionGranted){
+
+            permissionRequest.add(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        }
+
+        if (permissionRequest.isNotEmpty()){
+            permissionLauncher.launch(permissionRequest.toTypedArray())
+        }
+    }
 
 
     override fun onCreateView(
@@ -69,6 +89,12 @@ class MapsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){permission ->
+            isLocationPermissionGranted = permission[Manifest.permission.ACCESS_FINE_LOCATION]?: isLocationPermissionGranted
+
+        }
+        requestpermission()
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
