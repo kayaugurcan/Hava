@@ -1,13 +1,25 @@
 package kaya.ugurcan.hava.view
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.PackageManagerCompat
+import androidx.core.content.getSystemService
+import com.airbnb.lottie.animation.content.Content
 
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -15,7 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kaya.ugurcan.hava.R
 
 class MapsFragment : Fragment() {
-
+    private lateinit var locationManager: LocationManager
+    private lateinit var locationListener: LocationListener
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -25,11 +38,31 @@ class MapsFragment : Fragment() {
          * If Google Play services is not installed on the device, the user will be prompted to
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
+         * 41.1658788,29.0400142
          */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        /*val sariyer = LatLng(41.1658788, 29.0400142)
+        googleMap.addMarker(MarkerOptions().position(sariyer).title("Marker in Sarıyer"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sariyer,15f))*/
+
+        locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationListener = object : LocationListener{
+            override fun onLocationChanged(p0: Location) {
+
+            }
+
+        }
+
+        if (ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED ){
+            //izin verilmemiş
+            
+        }else{
+            //zaten izin verilmiş
+
+        }
+
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

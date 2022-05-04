@@ -29,7 +29,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         object : CountDownTimer(3L*1000,1000,) {
+         object : CountDownTimer(1L*1000,1000,) {
 
             override fun onTick(p0: Long) {
 
