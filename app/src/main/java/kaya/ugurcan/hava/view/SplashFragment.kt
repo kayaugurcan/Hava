@@ -1,4 +1,4 @@
-package kaya.ugurcan.hava
+package kaya.ugurcan.hava.view
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -7,9 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import kaya.ugurcan.hava.R
 
 
-class BlankFragment : Fragment() {
+class SplashFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class BlankFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false)
+        return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ class BlankFragment : Fragment() {
             }
 
             override fun onFinish() {
-                Navigation.findNavController(view).navigate(BlankFragmentDirections.actionBlankFragmentToMapsFragment())
+                Navigation.findNavController(view).navigate(SplashFragmentDirections.actionBlankFragmentToMapsFragment())
             }
 
         }.start()
