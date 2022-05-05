@@ -9,7 +9,11 @@
         android:id="@+id/mapsFragment"
         android:name="kaya.ugurcan.hava.view.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_cityFragment"
+            app:destination="@id/cityFragment" />
+    </fragment>
     <fragment
         android:id="@+id/blankFragment"
         android:name="kaya.ugurcan.hava.view.SplashFragment"
@@ -18,5 +22,17 @@
         <action
             android:id="@+id/action_blankFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityFragment"
+        android:name="kaya.ugurcan.hava.view.CityFragment"
+        android:label="fragment_city"
+        tools:layout="@layout/fragment_city" >
+        <argument
+            android:name="latitude"
+            app:argType="float" />
+        <argument
+            android:name="longtide"
+            app:argType="float" />
     </fragment>
 </navigation>
